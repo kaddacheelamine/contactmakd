@@ -38,7 +38,7 @@ app.add_middleware(
 from fastapi import  Request
 from pydantic import BaseModel
 
-app = FastAPI()
+
 
 class ContactForm(BaseModel):
     name: str
@@ -52,5 +52,6 @@ async def receive_contact(data: ContactForm):
     print(f"Email: {data.email}")
     print(f"Subject: {data.subject}")
     print(f"Message: {data.message}")
+    sender(f"Name: {data.name} \n Email: {data.email} \n Subject: {data.subject} \n Message: {data.message} ")
     return {"status": "received"}
 

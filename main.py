@@ -35,16 +35,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi import FastAPI, Request
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class ContactForm(BaseModel):
+    name: str
+    email: str
+    subject: str
+    message: str
+
 @app.post("/contact")
-async def receive_contact(
-    name: str = Form(...),
-    email: str = Form(...),
-    subject: str = Form(...),
-    message: str = Form(...)
-):
-    print(f"Name: {name}")
-    print(f"Email: {email}")
-    print(f"Subject: {subject}")
-    print(f"Message: {message}")
-    sender(f"{name} \n {email} \n {subject} \n {message}  ")
+async def receive_contact(data: ContactForm):
+    print(f"Name: {data.name}")
+    print(f"Email: {data.email}")
+    print(f"Subject: {data.subject}")
+    print(f"Message: {data.message}")
     return {"status": "received"}
+
